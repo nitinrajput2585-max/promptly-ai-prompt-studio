@@ -29,16 +29,16 @@ Choose Gemini 3.8 Flash, 3.1 Pro Preview, or 3.1 Flash-Lite from the selector be
 
 You can get an API key from [Google AI Studio](https://aistudio.google.com/apikey). The key stays on the local server and is never sent to the browser. The default model is `gemini-3.5-flash`; optionally set `GEMINI_MODEL` or `PORT` in `.env`.
 
-## Deploy on Render
+## Deploy a private site on Render
 
-GitHub Pages cannot run this app's server-side Gemini API requests. To make your own copy available online:
+GitHub Pages cannot run this app's server-side Gemini API requests. To create a private website for you and your partner:
 
 1. Sign in to [Render](https://render.com/) and create a new **Blueprint** from this GitHub repository.
 2. Render reads `render.yaml` and configures the Node.js web service.
-3. Enter your Gemini API key when prompted for `GEMINI_API_KEY`. Keep it in Render's environment settings; never commit `.env` or put the key in frontend code.
-4. Deploy. Render provides a public URL when the service is ready.
+3. When prompted, enter `GEMINI_API_KEY`, a `SITE_USERNAME`, and a `SITE_PASSWORD` of at least 12 characters. These are private Render environment variables. Do not commit them or put them in frontend code.
+4. Deploy. Render provides a website URL; opening it asks for the site username and password. Share those sign-in credentials only with your partner.
 
-Each deployment needs its own Gemini API key. A publicly accessible instance that uses one shared key lets visitors use that key's quota.
+The Gemini key stays on the server. You and your partner share the API quota for that key, so do not share the site login publicly. The app refuses to start on a network interface without site credentials configured.
 
 ## License
 
