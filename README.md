@@ -29,16 +29,16 @@ Choose Gemini 3.8 Flash, 3.1 Pro Preview, or 3.1 Flash-Lite from the selector be
 
 You can get an API key from [Google AI Studio](https://aistudio.google.com/apikey). The key stays on the local server and is never sent to the browser. The default model is `gemini-3.5-flash`; optionally set `GEMINI_MODEL` or `PORT` in `.env`.
 
-## Deploy your own copy
+## Deploy on Render
 
-This app needs a Node.js web-service host; GitHub Pages alone cannot run its server-side Gemini API requests.
+GitHub Pages cannot run this app's server-side Gemini API requests. To make your own copy available online:
 
-1. Fork or clone this repository.
-2. Create a Node.js web service with Node.js 20 or later and use `npm start` as its start command.
-3. Add `GEMINI_API_KEY` as a secret environment variable in the hosting provider's settings. Do not commit `.env` or put the key in frontend code.
-4. Optionally set `GEMINI_MODEL`. The host supplies `PORT` automatically.
+1. Sign in to [Render](https://render.com/) and create a new **Blueprint** from this GitHub repository.
+2. Render reads `render.yaml` and configures the Node.js web service.
+3. Enter your Gemini API key when prompted for `GEMINI_API_KEY`. Keep it in Render's environment settings; never commit `.env` or put the key in frontend code.
+4. Deploy. Render provides a public URL when the service is ready.
 
-Each deployment needs its own Gemini API key. The public repository contains the app source, not a hosted shared instance.
+Each deployment needs its own Gemini API key. A publicly accessible instance that uses one shared key lets visitors use that key's quota.
 
 ## License
 

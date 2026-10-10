@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: promptly-ai-prompt-studio
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/models
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-3.8-flash
+      - key: HOST
+        value: 0.0.0.0

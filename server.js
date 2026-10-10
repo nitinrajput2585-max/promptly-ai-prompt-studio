@@ -330,6 +330,7 @@ const server = http.createServer((request, response) => {
 });
 
 const port = Number(process.env.PORT) || 3000;
-server.listen(port, "127.0.0.1", () => {
+const host = process.env.HOST || "127.0.0.1";
+server.listen(port, host, () => {
   console.log(`Prompt Studio is ready at http://127.0.0.1:${port}`);
 });
