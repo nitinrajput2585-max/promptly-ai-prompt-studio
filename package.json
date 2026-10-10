@@ -1,0 +1,12 @@
+{
+  "name": "bilingual-prompt-studio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A bilingual AI prompt engineering studio powered by Google Gemini",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
