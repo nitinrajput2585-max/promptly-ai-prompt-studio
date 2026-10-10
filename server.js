@@ -1,7 +1,6 @@
 const http = require("node:http");
 const fs = require("node:fs");
 const path = require("node:path");
-const crypto = require("node:crypto");
 
 const ROOT = __dirname;
 const PUBLIC_DIR = path.join(ROOT, "public");
@@ -320,15 +319,6 @@ const server = http.createServer((request, response) => {
     response.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
     return response.end("ok");
   }
-  if (siteUsername && sitePassword && !hasValidSiteCredentials(request)) {
-    response.writeHead(401, {
-      "WWW-Authenticate": 'Basic realm="Promptly", charset="UTF-8"',
-      "Cache-Control": "no-store",
-      "Content-Type": "text/plain; charset=utf-8",
-      "X-Content-Type-Options": "nosniff",
-    });
-    return response.end("Sign in to use Promptly.");
-  }
   if (request.method === "GET" && url.pathname === "/api/models") {
     return sendJson(response, 200, getModels());
   }
@@ -345,32 +335,6 @@ const server = http.createServer((request, response) => {
 
 const port = Number(process.env.PORT) || 3000;
 const host = process.env.HOST || "127.0.0.1";
-const siteUsername = process.env.SITE_USERNAME;
-const sitePassword = process.env.SITE_PASSWORD;
-
-if (host !== "127.0.0.1" && (!siteUsername || !sitePassword || sitePassword.length < 12)) {
-  throw new Error("Set SITE_USERNAME and a SITE_PASSWORD of at least 12 characters before exposing the app to the network.");
-}
-
-function matchesCredential(actual, expected) {
-  const actualBuffer = Buffer.from(actual);
-  const expectedBuffer = Buffer.from(expected);
-  return actualBuffer.length === expectedBuffer.length
-    && crypto.timingSafeEqual(actualBuffer, expectedBuffer);
-}
-
-function hasValidSiteCredentials(request) {
-  const authorization = request.headers.authorization || "";
-  const encodedCredentials = authorization.match(/^Basic\s+(.+)$/i)?.[1];
-  if (!encodedCredentials) return false;
-
-  const credentials = Buffer.from(encodedCredentials, "base64").toString("utf8");
-  const separator = credentials.indexOf(":");
-  if (separator < 0) return false;
-
-  return matchesCredential(credentials.slice(0, separator), siteUsername)
-    && matchesCredential(credentials.slice(separator + 1), sitePassword);
-}
 
 server.listen(port, host, () => {
   console.log(`Prompt Studio is ready at http://127.0.0.1:${port}`);

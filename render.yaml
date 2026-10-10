@@ -9,10 +9,6 @@ services:
     envVars:
       - key: GEMINI_API_KEY
         sync: false
-      - key: SITE_USERNAME
-        sync: false
-      - key: SITE_PASSWORD
-        sync: false
       - key: GEMINI_MODEL
         value: gemini-3.8-flash
       - key: HOST
